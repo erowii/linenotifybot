@@ -24,7 +24,7 @@ var allowCrossDomain = function(req, res, next) {
   next();
 }
 
-app.use(allowCrossDomain)
+app.use(allowCrossDomain);
 
 app.get('/', function(req, res) {
     res.send('hello world');
@@ -33,7 +33,7 @@ app.get('/', function(req, res) {
 app.post('/api/onsale', function(req, res) {
 	bot.broadcast({
 	    "type": "text",
-	    "text": JSON.stringify(req.body)
+	    "text": JSON.stringify(req)
 	});
     res.json({success: true});
 });
