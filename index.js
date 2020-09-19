@@ -31,10 +31,11 @@ app.get('/', function(req, res) {
 });
 
 app.post('/api/onsale', function(req, res) {
-	bot.broadcast({
-	    "type": "text",
-	    "text": JSON.stringify(req)
-	});
+	console.log("req", req);
+	// bot.broadcast({
+	//     "type": "text",
+	//     "text": JSON.stringify(req)
+	// });
     res.json({success: true});
 });
 
