@@ -25,7 +25,8 @@
   "keywords": [
     "node",
     "heroku",
-    "express"
+    "express",
+    "linebot"
   ],
   "license": "MIT"
 }
