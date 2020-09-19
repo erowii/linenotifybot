@@ -24,7 +24,7 @@ bot.listen('/', process.env.PORT || 5000, function() {
 });
 
 //line啟動時發送訊息
-linebot.broadcast({
-        "type": "text",
-        "text": "LineBot Action!"
-      });
+bot.broadcast({
+    "type": "text",
+    "text": "LineBot Action!"
+});
