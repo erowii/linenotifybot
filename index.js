@@ -1,7 +1,7 @@
 //API 
 // https://www.npmjs.com/package/linebot
 // https://www.npmjs.com/package/axios
-console.log("ver:1");
+console.log("ver:2");
 const linebot = require('linebot');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -78,7 +78,8 @@ app.post('/linewebhook', parser, function(req, res) {
 // 當有人傳送訊息給 Bot 時
 bot.on('message', function(event) {
 	console.log(`MessageEvent userId: ${event.source.userId}, message: ${event.message.text}`);
-    if (event.message.text.includes("監控")) {
+	var text = event.message.text;
+    if (text.includes("監控")) {
         var prodId = event.message.text.replace("監控", "");
         getProdButtonStateAndQty(prodId).then((res) => {
             if (res != null && res.ButtonType) {
@@ -99,6 +100,8 @@ bot.on('message', function(event) {
                 event.reply(`找不到該商品!`);
             }
         });
+    } else if (text.includes("查詢UserID")){
+        event.reply(event.source.userId);
     } else {
         // 回覆訊息給使用者 (一問一答所以是回覆不是推送)
         // event.reply(`你說了 ${event.message.text}`);
