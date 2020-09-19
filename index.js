@@ -94,7 +94,7 @@ app.post('/api/onorder', function(req, res) {
         }
     }
     res.json({ success: true });
-}
+});
 
 app.post('/linewebhook', parser, function(req, res) {
     if (!bot.verify(req.rawBody, req.get('X-Line-Signature'))) {
