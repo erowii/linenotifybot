@@ -1,7 +1,7 @@
 //API 
 // https://www.npmjs.com/package/linebot
 // https://www.npmjs.com/package/axios
-console.log("ver:2");
+console.log("ver:3");
 const linebot = require('linebot');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -79,8 +79,8 @@ app.post('/linewebhook', parser, function(req, res) {
 bot.on('message', function(event) {
 	console.log(`MessageEvent userId: ${event.source.userId}, message: ${event.message.text}`);
 	var text = event.message.text;
-    if (text.includes("監控")) {
-        var prodId = event.message.text.replace("監控", "");
+    if (text.includes("/查詢產品")) {
+        var prodId = event.message.text.replace("/查詢產品", "");
         getProdButtonStateAndQty(prodId).then((res) => {
             if (res != null && res.ButtonType) {
                 var msg = "";
@@ -100,12 +100,14 @@ bot.on('message', function(event) {
                 event.reply(`找不到該商品!`);
             }
         });
-    } else if (text.includes("查詢UserID")){
+    } else if (text.includes("/查詢UserID")){
         event.reply(event.source.userId);
+    } else if (text.includes("/help")){
+        event.reply('/查詢產品+ProdID ex: /查詢產品DGBJGB-A900AVK52\n/查詢UserID');
     } else {
         // 回覆訊息給使用者 (一問一答所以是回覆不是推送)
         // event.reply(`你說了 ${event.message.text}`);
-        event.reply(`沒有該指令`);
+        event.reply(`/沒有該指令 輸入/help查詢指令`);
     }
 });
 
