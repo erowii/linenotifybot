@@ -1,6 +1,7 @@
 //API 
 // https://www.npmjs.com/package/linebot
 // https://www.npmjs.com/package/axios
+console.log("ver:1");
 const linebot = require('linebot');
 const express = require('express');
 const bodyParser = require('body-parser');
