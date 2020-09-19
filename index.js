@@ -40,6 +40,6 @@ bot.on('message', function (event) {
 });
 
 // Bot所監聽的webhook路徑與port
-bot.listen('/linewebhook', port, function () {
+bot.listen('/linewebhook', 3000, function () {
     console.log('[BOT已準備就緒]');
 });
