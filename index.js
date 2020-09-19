@@ -7,14 +7,21 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 
 // 初始化 line bot 需要的資訊，在 Heroku 上的設定的 Config Vars，可參考 Step2
-const bot = linebot({
-    channelId: process.env.channelId,
-    channelSecret: process.env.channelSecret,
-    channelAccessToken: process.env.channelAccessToken
-    // channelId: "1654940136",
-    // channelSecret: "8a4dcd0f2983e9b2e9d2b9db43517803",
-    // channelAccessToken: "QbmZPCahmyMALl+M34eFPfiPtYrFtmFtC6K9SRM7ZhnWdAJGB/50V5YYZLuUCkFvXnFk29r5yHqQdCQnfe0IoYKQLekJ9muHefED4CI6ohfdNcrMioLPwpSdtYOJRbXHuPJtfE7/I/P6wtvSNm3ypQdB04t89/1O/w1cDnyilFU="
-});
+var bot;
+if (process && process.env) {
+    bot = linebot({
+        channelId: process.env.channelId,
+        channelSecret: process.env.channelSecret,
+        channelAccessToken: process.env.channelAccessToken
+    });
+} else {
+    bot = linebot({
+        channelId: "1654940136",
+        channelSecret: "8a4dcd0f2983e9b2e9d2b9db43517803",
+        channelAccessToken: "QbmZPCahmyMALl+M34eFPfiPtYrFtmFtC6K9SRM7ZhnWdAJGB/50V5YYZLuUCkFvXnFk29r5yHqQdCQnfe0IoYKQLekJ9muHefED4CI6ohfdNcrMioLPwpSdtYOJRbXHuPJtfE7/I/P6wtvSNm3ypQdB04t89/1O/w1cDnyilFU="
+    });
+}
+
 
 const app = express();
 
@@ -24,7 +31,6 @@ const parser = bodyParser.json({
     }
 });
 
-// app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 var allowCrossDomain = function(req, res, next) {
@@ -39,17 +45,23 @@ app.get('/', function(req, res) {
     res.send('hello world');
 });
 
-app.get('/keepalive', function(req, res) {
+app.get('/api/keepalive', function(req, res) {
+    console.log("keepalive id: " + req.query.id);
     res.json({ success: true });
 });
 
 app.post('/api/onsale', function(req, res) {
     console.log("req", req.body);
     if (req.body && req.body.msg) {
-        bot.broadcast({
+        var msg = {
             "type": "text",
             "text": req.body.msg
-        });
+        };
+        if (req.body.lineId) {
+            bot.push(lineId, msg);
+        } else {
+            bot.broadcast(msg);
+        }
     }
     res.json({ success: true });
 });
@@ -68,21 +80,21 @@ bot.on('message', function(event) {
         var prodId = event.message.text.replace("監控", "");
         getProdButtonStateAndQty(prodId).then((res) => {
             if (res != null && res.ButtonType) {
-            	var msg = "";
-            	switch(res.ButtonType){
-            		case 'ForSale':
-            			msg = `${res.Name} 開賣啦! 快去搶購 \n數量:${res.Qty}`;
-            			break;
-            		case 'OrderRefill':
-            			msg = `${res.Name} 賣完惹，下次請早`;
-            			break;
-            		case 'NotReady':
-            			msg = `${res.Name} 尚未開賣`;
-            			break;
-            	}
+                var msg = "";
+                switch (res.ButtonType) {
+                    case 'ForSale':
+                        msg = `${res.Name} 開賣啦! 快去搶購 \n數量:${res.Qty}`;
+                        break;
+                    case 'OrderRefill':
+                        msg = `${res.Name} 賣完惹，下次請早`;
+                        break;
+                    case 'NotReady':
+                        msg = `${res.Name} 尚未開賣`;
+                        break;
+                }
                 event.reply(msg);
             } else {
-        		event.reply(`找不到該商品!`);
+                event.reply(`找不到該商品!`);
             }
         });
     } else {
