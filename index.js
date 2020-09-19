@@ -22,9 +22,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 var allowCrossDomain = function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  next();
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    next();
 }
 
 app.use(allowCrossDomain);
@@ -34,12 +34,14 @@ app.get('/', function(req, res) {
 });
 
 app.post('/api/onsale', function(req, res) {
-	console.log("req", req.body);
-	// bot.broadcast({
-	//     "type": "text",
-	//     "text": JSON.stringify(req)
-	// });
-    res.json({success: true});
+    console.log("req", req.body);
+    if (req.body && req.body.msg) {
+        bot.broadcast({
+            "type": "text",
+            "text": req.body.msg
+        });
+    }
+    res.json({ success: true });
 });
 
 app.post('/linewebhook', parser, function(req, res) {
