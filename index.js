@@ -58,7 +58,7 @@ app.post('/api/onsale', function(req, res) {
             "text": req.body.msg
         };
         if (req.body.lineId) {
-            bot.push(lineId, msg);
+            bot.push(req.body.lineId, msg);
         } else {
             bot.broadcast(msg);
         }
