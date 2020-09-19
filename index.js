@@ -1,7 +1,7 @@
 //API 
 // https://www.npmjs.com/package/linebot
 // https://www.npmjs.com/package/axios
-console.log("ver:3");
+console.log("ver:4");
 const linebot = require('linebot');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -46,13 +46,21 @@ app.get('/', function(req, res) {
     res.send('hello world');
 });
 
+//保持連線用
 app.get('/api/keepalive', function(req, res) {
     console.log("keepalive id: " + req.query.id);
     res.json({ success: true });
 });
 
+//購物車偵測到商品時用
+/*
+req.body:{
+	lineId:string,
+	msg:string
+}
+*/
 app.post('/api/onsale', function(req, res) {
-    console.log("req", req.body);
+    console.log("onsale req", req.body);
     if (req.body && req.body.msg) {
         var msg = {
             "type": "text",
@@ -66,6 +74,27 @@ app.post('/api/onsale', function(req, res) {
     }
     res.json({ success: true });
 });
+
+//下單成功時使用
+/*
+req.body:{
+	lineId:string,
+	msg:string
+}
+*/
+app.post('/api/onorder', function(req, res) {
+    console.log("onorder req", req.body);
+    if (req.body && req.body.msg) {
+        var msg = {
+            "type": "text",
+            "text": req.body.msg
+        };
+        if (req.body.lineId) {
+            bot.push(req.body.lineId, msg);
+        }
+    }
+    res.json({ success: true });
+}
 
 app.post('/linewebhook', parser, function(req, res) {
     if (!bot.verify(req.rawBody, req.get('X-Line-Signature'))) {
