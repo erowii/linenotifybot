@@ -18,6 +18,10 @@ const parser = bodyParser.json({
     }
 });
 
+app.get('/', function(req, res) {
+    res.send('hello world');
+});
+
 app.post('/linewebhook', parser, function(req, res) {
     if (!bot.verify(req.rawBody, req.get('X-Line-Signature'))) {
         return res.sendStatus(400);
