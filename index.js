@@ -64,7 +64,7 @@ app.post('/linewebhook', parser, function(req, res) {
 
 // 當有人傳送訊息給 Bot 時
 bot.on('message', function(event) {
-    if (event.message.text.ncludes("監控")) {
+    if (event.message.text.includes("監控")) {
         var prodId = event.message.text.replace("監控", "");
         getProdButtonStateAndQty(prodId).then((res) => {
             if (res != null && res.ButtonType) {
