@@ -22,6 +22,14 @@ app.get('/', function(req, res) {
     res.send('hello world');
 });
 
+app.post('/api/onsale', function(req, res) {
+	bot.broadcast({
+	    "type": "text",
+	    "text": JSON.stringify(req.body)
+	});
+    res.json({success: true});
+});
+
 app.post('/linewebhook', parser, function(req, res) {
     if (!bot.verify(req.rawBody, req.get('X-Line-Signature'))) {
         return res.sendStatus(400);
