@@ -18,6 +18,8 @@ const parser = bodyParser.json({
     }
 });
 
+const jsonParser = bodyParser.json()
+
 var allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
@@ -30,7 +32,7 @@ app.get('/', function(req, res) {
     res.send('hello world');
 });
 
-app.post('/api/onsale', parser, function(req, res) {
+app.post('/api/onsale', jsonParser, function(req, res) {
 	console.log("req", req.body);
 	// bot.broadcast({
 	//     "type": "text",
