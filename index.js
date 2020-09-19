@@ -30,7 +30,7 @@ app.get('/', function(req, res) {
     res.send('hello world');
 });
 
-app.post('/api/onsale', function(req, res) {
+app.post('/api/onsale', parser, function(req, res) {
 	console.log("req", req.body);
 	// bot.broadcast({
 	//     "type": "text",
