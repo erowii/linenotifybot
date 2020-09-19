@@ -18,8 +18,8 @@ const parser = bodyParser.json({
     }
 });
 
-// const jsonParser = bodyParser.json()
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 var allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
