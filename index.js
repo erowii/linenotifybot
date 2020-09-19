@@ -31,7 +31,7 @@ app.get('/', function(req, res) {
 });
 
 app.post('/api/onsale', function(req, res) {
-	console.log("req", req);
+	console.log("req", req.body);
 	// bot.broadcast({
 	//     "type": "text",
 	//     "text": JSON.stringify(req)
