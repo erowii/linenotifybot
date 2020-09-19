@@ -10,7 +10,7 @@
 //   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 const http = require("http");
-const linebot = require("linebot");
+// const linebot = require("linebot");
 
 // const hostname = "127.0.0.1";
 const port = process.env.PORT || 5000;
