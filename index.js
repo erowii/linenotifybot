@@ -132,6 +132,7 @@ app.post('/api/payment', function(req, res) {
                     template: {
                         type: "buttons",
                         text: "LinePay",
+                        imageSize: "contain"
                     	thumbnailImageUrl: path,
                         actions: [{  
 						 	type:"uri",
