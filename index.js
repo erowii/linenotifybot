@@ -34,6 +34,7 @@ const parser = bodyParser.json({
 });
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static('public'));
 
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
