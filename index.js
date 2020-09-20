@@ -131,13 +131,13 @@ app.post('/api/payment', function(req, res) {
                     altText: `有一筆LinePay訂單成立了! 付款連結:\n${req.body.url}`,
                     template: {
                         type: "buttons",
-                        title: "LinePay",
+                        text: "LinePay",
                     	thumbnailImageUrl: path,
-                        defaultAction: {  
+                        actions: [{  
 						 	type:"uri",
 						 	label:"付款",
 						 	uri: req.body.url
-						}
+						}]
                     }
                 }
                 bot.push(req.body.lineId, msg2);
