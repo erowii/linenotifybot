@@ -107,7 +107,7 @@ req.body:{
 */
 app.post('/api/payment', function(req, res) {
     console.log("payment req", req.body);
-    if (req.body && req.body.msg && req.body.lineId) {
+    if (req.body && req.body.url && req.body.lineId) {
         var msg = {
             type: "text",
             text: `有一筆LinePay訂單成立了! 付款連結:\n${req.body.url}`
