@@ -154,7 +154,7 @@ app.post('/api/payment', function(req, res) {
                             "action": {
                                 "type": "uri",
                                 "label": "付款",
-                                "uri": "https://linecorp.com"
+                                "uri": req.body.url
                             }
                         }],
                         "flex": 0
