@@ -117,7 +117,7 @@ app.post('/api/payment', function(req, res) {
         //bot.push(req.body.lineId, msg);
         if (req.body.img) {
         	saveImage(req.body.img, function(path){
-        		console.log("Send Image");
+        		console.log("Send Image", path);
 	            var msg2 = {
 	                "type": "image",
 	                originalContentUrl: path,
@@ -187,8 +187,7 @@ function saveImage(base64String, onComplete) {
 	var path = `public/images/image.png`;
     console.log("saveImage", path);
 	fs.writeFile(path, base64Image, {encoding: 'base64'}, function(err) {
-    	console.log("onComplete", err);
-		onComplete && onComplete(`/images/image.png`);
+		onComplete && onComplete(`${process.env}images/image.png`);
 	});
 }
 
