@@ -37,6 +37,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'content-type');
     next();
 }
 
@@ -105,7 +106,7 @@ req.body:{
 }
 */
 app.post('/api/payment', function(req, res) {
-    console.log("onorder req", req.body);
+    console.log("payment req", req.body);
     if (req.body && req.body.msg && req.body.lineId) {
         var msg = {
             type: "text",
