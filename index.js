@@ -129,8 +129,8 @@ app.post('/api/payment', function(req, res) {
                             "type": "image",
                             "url": imageUrl,
                             "size": "full",
-                            "aspectRatio": "20:13",
-                            "aspectMode": "cover",
+                            "aspectRatio": "5:4",
+                            "aspectMode": "fit",
                             "action": {
                                 "type": "uri",
                                 "uri": req.body.url
@@ -140,11 +140,19 @@ app.post('/api/payment', function(req, res) {
                             "type": "box",
                             "layout": "vertical",
                             "contents": [{
-                                "type": "text",
-                                "text": "LinePay",
-                                "weight": "bold",
-                                "size": "xl"
-                            }]
+                                    "type": "text",
+                                    "text": "LinePay",
+                                    "weight": "bold",
+                                    "size": "xl",
+                                    "color": "#FFFFFF"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "有一筆LinePay訂單成立了!",
+                                    "color": "#CCCCCC"
+                                }
+                            ],
+                            "backgroundColor": "#333333"
                         },
                         "footer": {
                             "type": "box",
@@ -158,9 +166,16 @@ app.post('/api/payment', function(req, res) {
                                     "type": "uri",
                                     "label": "付款",
                                     "uri": req.body.url
-                                }
+                                },
+                                "color": "#FFFFFF"
                             }],
                             "flex": 0
+                        },
+                        "styles": {
+                            "footer": {
+                                "backgroundColor": "#333333",
+                                "separator": true
+                            }
                         }
                     }
                 };
