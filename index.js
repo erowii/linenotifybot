@@ -187,7 +187,7 @@ function saveImage(base64String, onComplete) {
 	var path = `public/images/image.png`;
     console.log("saveImage", path);
 	fs.writeFile(path, base64Image, {encoding: 'base64'}, function(err) {
-		onComplete && onComplete(`${process.env}images/image.png`);
+		onComplete && onComplete(`${process.env.host}images/image.png`);
 	});
 }
 
