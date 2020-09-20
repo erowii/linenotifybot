@@ -121,43 +121,47 @@ app.post('/api/payment', function(req, res) {
             saveImage(req.body.img, function(imageUrl) {
                 console.log("Send Image", imageUrl);
                 var msg2 = {
-                    "type": "bubble",
-                    "hero": {
-                        "type": "image",
-                        "url": imageUrl,
-                        "size": "full",
-                        "aspectRatio": "20:13",
-                        "aspectMode": "cover",
-                        "action": {
-                            "type": "uri",
-                            "uri": "http://linecorp.com/"
-                        }
-                    },
-                    "body": {
-                        "type": "box",
-                        "layout": "vertical",
-                        "contents": [{
-                            "type": "text",
-                            "text": "LinePay",
-                            "weight": "bold",
-                            "size": "xl"
-                        }]
-                    },
-                    "footer": {
-                        "type": "box",
-                        "layout": "vertical",
-                        "spacing": "sm",
-                        "contents": [{
-                            "type": "button",
-                            "style": "link",
-                            "height": "sm",
+                    "type": "flex",
+                    "altText": `有一筆LinePay訂單成立了! 付款連結:\n${req.body.url}`,
+                    "contents": {
+                        "type": "bubble",
+                        "hero": {
+                            "type": "image",
+                            "url": imageUrl,
+                            "size": "full",
+                            "aspectRatio": "20:13",
+                            "aspectMode": "cover",
                             "action": {
                                 "type": "uri",
-                                "label": "付款",
                                 "uri": req.body.url
                             }
-                        }],
-                        "flex": 0
+                        },
+                        "body": {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [{
+                                "type": "text",
+                                "text": "LinePay",
+                                "weight": "bold",
+                                "size": "xl"
+                            }]
+                        },
+                        "footer": {
+                            "type": "box",
+                            "layout": "vertical",
+                            "spacing": "sm",
+                            "contents": [{
+                                "type": "button",
+                                "style": "link",
+                                "height": "sm",
+                                "action": {
+                                    "type": "uri",
+                                    "label": "付款",
+                                    "uri": req.body.url
+                                }
+                            }],
+                            "flex": 0
+                        }
                     }
                 };
                 // bot.push(req.body.lineId, msg2);
