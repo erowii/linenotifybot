@@ -121,25 +121,43 @@ app.post('/api/payment', function(req, res) {
             saveImage(req.body.img, function(imageUrl) {
                 console.log("Send Image", imageUrl);
                 var msg2 = {
-                    type: "template",
-                    altText: `有一筆LinePay訂單成立了! 付款連結:\n${req.body.url}`,
-                    template: {
-                        type: "image_carousel",
-                        columns: [{
-                            imageUrl: imageUrl,
-                            action: {
-                                type: "uri",
-                                label: "付款",
-                                data: req.body.url
-                            }
-                        },{
-                            imageUrl: imageUrl,
-                            action: {
-                                type: "uri",
-                                label: "付款",
-                                data: req.body.url
-                            }
+                    "type": "bubble",
+                    "hero": {
+                        "type": "image",
+                        "url": imageUrl,
+                        "size": "full",
+                        "aspectRatio": "20:13",
+                        "aspectMode": "cover",
+                        "action": {
+                            "type": "uri",
+                            "uri": "http://linecorp.com/"
+                        }
+                    },
+                    "body": {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [{
+                            "type": "text",
+                            "text": "LinePay",
+                            "weight": "bold",
+                            "size": "xl"
                         }]
+                    },
+                    "footer": {
+                        "type": "box",
+                        "layout": "vertical",
+                        "spacing": "sm",
+                        "contents": [{
+                            "type": "button",
+                            "style": "link",
+                            "height": "sm",
+                            "action": {
+                                "type": "uri",
+                                "label": "付款",
+                                "uri": "https://linecorp.com"
+                            }
+                        }],
+                        "flex": 0
                     }
                 };
                 // bot.push(req.body.lineId, msg2);
