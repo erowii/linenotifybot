@@ -84,16 +84,46 @@ req.body:{
 */
 app.post('/api/onorder', function(req, res) {
     console.log("onorder req", req.body);
-    if (req.body && req.body.msg) {
+    if (req.body && req.body.msg && req.body.lineId) {
         var msg = {
             "type": "text",
             "text": req.body.msg
         };
-        if (req.body.lineId) {
+        bot.push(req.body.lineId, msg);
+        res.json({ success: true });
+    } else {
+        res.json({ success: false });
+    }
+});
+
+//進入付款頁面時使用
+/*
+req.body:{
+	lineId:string,
+	url:string,
+	img:string
+}
+*/
+app.post('/api/payment', function(req, res) {
+    console.log("onorder req", req.body);
+    if (req.body && req.body.msg && req.body.lineId) {
+        var msg = {
+            type: "text",
+            text: `有一筆LinePay訂單成立了! 付款連結:\n${req.body.url}`
+        };
+        bot.push(req.body.lineId, msg);
+        if (req.body.img) {
+            var msg2 = {
+                "type": "image",
+                originalContentUrl: req.body.img,
+                previewImageUrl: req.body.img
+            };
             bot.push(req.body.lineId, msg);
         }
+        res.json({ success: true });
+    } else {
+        res.json({ success: false });
     }
-    res.json({ success: true });
 });
 
 app.post('/linewebhook', parser, function(req, res) {
@@ -106,8 +136,8 @@ app.post('/linewebhook', parser, function(req, res) {
 
 // 當有人傳送訊息給 Bot 時
 bot.on('message', function(event) {
-	console.log(`MessageEvent userId: ${event.source.userId}, message: ${event.message.text}`);
-	var text = event.message.text;
+    console.log(`MessageEvent userId: ${event.source.userId}, message: ${event.message.text}`);
+    var text = event.message.text;
     if (text.includes("/查詢產品")) {
         var prodId = event.message.text.replace("/查詢產品", "");
         getProdButtonStateAndQty(prodId).then((res) => {
@@ -129,9 +159,9 @@ bot.on('message', function(event) {
                 event.reply(`找不到該商品!`);
             }
         });
-    } else if (text.includes("/查詢UserID")){
+    } else if (text.includes("/查詢UserID")) {
         event.reply(event.source.userId);
-    } else if (text.includes("/help")){
+    } else if (text.includes("/help")) {
         event.reply('/查詢產品+ProdID ex: /查詢產品DGBJGB-A900AVK52\n/查詢UserID');
     } else {
         // 回覆訊息給使用者 (一問一答所以是回覆不是推送)
