@@ -132,6 +132,13 @@ app.post('/api/payment', function(req, res) {
                                 label: "付款",
                                 data: req.body.url
                             }
+                        },{
+                            imageUrl: imageUrl,
+                            action: {
+                                type: "uri",
+                                label: "付款",
+                                data: req.body.url
+                            }
                         }]
                     }
                 };
