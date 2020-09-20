@@ -188,7 +188,7 @@ function saveImage(base64String, onComplete) {
     console.log("saveImage", path);
 	fs.writeFile(path, base64Image, {encoding: 'base64'}, function(err) {
     	console.log("onComplete", err);
-		onComplete && onComplete(path);
+		onComplete && onComplete(`/images/image.png`);
 	});
 }
 
