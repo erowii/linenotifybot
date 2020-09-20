@@ -1,7 +1,7 @@
 //API 
 // https://www.npmjs.com/package/linebot
 // https://www.npmjs.com/package/axios
-console.log("ver:5 env:" + process.env);
+console.log("ver:5 env:" + JSON.stringify(process.env));
 const linebot = require('linebot');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -114,8 +114,9 @@ app.post('/api/payment', function(req, res) {
             type: "text",
             text: `有一筆LinePay訂單成立了! 付款連結:\n${req.body.url}`
         };
-        bot.push(req.body.lineId, msg);
+        //bot.push(req.body.lineId, msg);
         if (req.body.img) {
+        	console.log("saveImage");
         	saveImage(req.body.img, (path) => {
 	            var msg2 = {
 	                "type": "image",
