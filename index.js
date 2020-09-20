@@ -184,6 +184,7 @@ app.listen(process.env.PORT || 5000, function() {
 function saveImage(base64String, onComplete) {
 	var base64Image = base64String.split(';base64,').pop();
 	var path = `public/images/image_${Date.now()}.png`;
+    console.log("saveImage", path);
 	fs.writeFileSync(path, base64Image, {encoding: 'base64'}, function(err) {
 		onComplete && onComplete(path);
 	    console.log('File created', path);
