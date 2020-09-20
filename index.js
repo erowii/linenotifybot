@@ -7,9 +7,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 const fs = require('fs');
-const host = "";
 
 // 初始化 line bot 需要的資訊，在 Heroku 上的設定的 Config Vars，可參考 Step2
+var host = "";
 var bot;
 if (process && process.env) {
     bot = linebot({
