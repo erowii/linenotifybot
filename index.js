@@ -186,7 +186,7 @@ function saveImage(base64String, onComplete) {
 	// var path = `public/images/image_${Date.now()}.png`;
 	var path = `public/images/image.png`;
     console.log("saveImage", path);
-	fs.writeFileSync(path, base64Image, {encoding: 'base64'}, function(err) {
+	fs.writeFile(path, base64Image, {encoding: 'base64'}, function(err) {
     	console.log("onComplete", err);
 		onComplete && onComplete(path);
 	});
