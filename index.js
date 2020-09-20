@@ -118,29 +118,39 @@ app.post('/api/payment', function(req, res) {
         };
         //bot.push(req.body.lineId, msg);
         if (req.body.img) {
-            saveImage(req.body.img, function(path) {
-                console.log("Send Image", path);
-                // var msg2 = {
-                //     "type": "image",
-                //     originalContentUrl: path,
-                //     previewImageUrl: path
-                // };
-                // bot.push(req.body.lineId, msg2);
+            saveImage(req.body.img, function(imageUrl) {
+                console.log("Send Image", imageUrl);
                 var msg2 = {
                     type: "template",
                     altText: `有一筆LinePay訂單成立了! 付款連結:\n${req.body.url}`,
                     template: {
-                        type: "buttons",
-                        text: "LinePay",
-                        imageSize: "contain",
-                    	thumbnailImageUrl: path,
-                        actions: [{  
-						 	type:"uri",
-						 	label:"付款",
-						 	uri: req.body.url
-						}]
+                        type: "image_carousel",
+                        columns: [{
+                            imageUrl: imageUrl,
+                            action: {
+                                type: "uri",
+                                label: "付款",
+                                data: req.body.url
+                            }
+                        }]
                     }
-                }
+                };
+                // bot.push(req.body.lineId, msg2);
+                //           var msg2 = {
+                //               type: "template",
+                //               altText: `有一筆LinePay訂單成立了! 付款連結:\n${req.body.url}`,
+                //               template: {
+                //                   type: "buttons",
+                //                   text: "LinePay",
+                //                   imageSize: "contain",
+                //               	thumbnailImageUrl: path,
+                //                   actions: [{  
+                //  	type:"uri",
+                //  	label:"付款",
+                //  	uri: req.body.url
+                // }]
+                //               }
+                //           }
                 bot.push(req.body.lineId, msg2);
             });
         }
